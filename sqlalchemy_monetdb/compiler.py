@@ -69,6 +69,9 @@ class MonetTypeCompiler(compiler.GenericTypeCompiler):
             return "CLOB"
         return compiler.GenericTypeCompiler.visit_VARCHAR(self, type_)
 
+    def visit_TINYINT(self, type_):
+        return "TINYINT"
+
 
 class MonetCompiler(compiler.SQLCompiler):
     def visit_mod(self, binary, **kw):
