@@ -336,9 +336,15 @@ class MonetCompiler(compiler.SQLCompiler):
         else:
             sep = OPERATORS[clauselist.operator]
 
+        def update_kw(c):
+            kwc = kw.copy()
+            if 'render_label_as_label' not in kw:
+                kwc['render_label_as_label'] = c if with_in_group else None
+            return kwc
+
         return sep.join(
             s for s in
             (
-                c._compiler_dispatch(self, render_label_as_label=(c if with_in_group else None), **kw)
+                c._compiler_dispatch(self, **update_kw(c))
                 for c in clauselist.clauses)
             if s)
